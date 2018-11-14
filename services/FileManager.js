@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 
 class FileManager {
     static createFile(name, content = "") {
@@ -7,7 +8,8 @@ class FileManager {
                 throw err;
             }
 
-            console.log("saved!")
+            console.log("created " + name);
+            
         });
     }
 
@@ -15,6 +17,10 @@ class FileManager {
         if(!fs.existsSync(name)){
             fs.mkdirSync(name);
         }
+    }
+
+    static getParentFolderName(currentfolder) {
+        return path.dirname(filename).split(path.sep).pop();
     }
 }
 
