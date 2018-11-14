@@ -21,14 +21,18 @@ function main(args) {
         }
     }
 
-    createHomefolder(homefolder);
-    createDirectories();
+	console.log("creating homefolder");
+	
+	createHomefolder(homefolder);
+	console.log("creating directories")
+	createDirectories();
+	console.log("creating files");
     createFiles(electron);
 }
 
 function createHomefolder(name) {
     if(name === "") {
-        projectname = fs.getParentFolderName();
+        projectname = fs.getParentFolderName(name);
         return;
     }
 

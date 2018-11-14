@@ -13,6 +13,7 @@ isElectronApp();
 
 function isElectronApp() {
 	let package = fs.findFile("package.json");
-	console.log(package);
-	console.log(fs.isElectronApp(package));
+	if(package === "")
+		return false;
+	return fs.isElectronApp(package);
 }

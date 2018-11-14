@@ -20,7 +20,6 @@ class FileManager {
     }
 
     static getParentFolderName(currentfolder) {
-        return path.dirname(filename).split(path.sep).pop();
     }
 
     static findFile(filename, counter = 10) {
