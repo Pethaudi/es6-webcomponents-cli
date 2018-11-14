@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+const pkg = require("pkg-dir");
+const find = require("find");
 
 class FileManager {
     static createFile(name, content = "") {
@@ -17,7 +19,11 @@ class FileManager {
         if (!fs.existsSync(name)) {
             fs.mkdirSync(name);
         }
-    }
+	}
+	
+	static appendFile(file, text) {
+		fs.appendFile(file, text);
+	}
 
     static getParentFolderName(currentfolder) {
 		return path.dirname(currentfolder).split(path.sep).pop()
@@ -25,6 +31,24 @@ class FileManager {
 
     static findFile(filename, counter = 10) {
         if (counter < 0) {
+            return "";
+		}
+
+        if (!fs.existsSync(filename)) {
+            counter--;
+            return FileManager.findFile("../" + filename, counter);
+        }
+        else {
+            return filename;
+		}
+	}
+
+	static findFile(filename, startdir) {
+		return find.fileSync(filename, startdir);
+	}
+
+	static findDir(dirname, counter = 10) {
+		if (counter < 0) {
             return "";
 		}
 
@@ -45,6 +69,10 @@ class FileManager {
 
 	static readFile(filename) {
 		return fs.readFileSync(filename);
+	}
+
+	static async getProjectRoot() {
+		return await pkg(__dirname);
 	}
 }
 

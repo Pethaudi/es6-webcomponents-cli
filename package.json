@@ -22,5 +22,10 @@
     "es6-project": "./create-project/CreateProject.js",
     "es6-component": "./create-component/CreateComponent.js",
     "component": "./create-component/CreateComponent.js"
+  },
+  "dependencies": {
+    "find": "^0.2.9",
+    "find-up": "^3.0.0",
+    "pkg-dir": "^3.0.0"
   }
 }

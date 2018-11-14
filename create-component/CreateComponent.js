@@ -3,26 +3,67 @@
 const fs = require("./../services/FileManager.js");
 const data = require("./Strings.js");
 
-let homefolder = "./";
-let projectname = "";
+let componentname = "";
 let [,,...args] = process.argv;
 let electron = isElectronApp();
+let onlyJs = false;
 
 function main(args) {
+	if(args.length == 0) {
+		console.log("please name the component");
+		return;
+	}
 
+	for(let i = 0; i < args.length; i++) {
+		if(args[i] === "-j"){
+			onlyJs = true;
+		}
+		else if(args[i].length > 2 && matchesConstraint(args[i])){
+			componentname = args[i];
+		}
+	}
+
+	if(componentname === ""){
+		console.log("please enter a valid name for the component");
+		return;
+	}
+
+	createAllFiles();
 }
 
-function isElectronApp() {
-	let package = fs.findFile("package.json");
-	if(package === "")
-		return false;
-	return fs.isElectronApp(package);
+async function isElectronApp() {
+	let package = await fs.getProjectRoot();
+	return fs.isElectronApp(package + "/package.json");
 }
 
-function createFiles() {
-	
+function createAllFiles() {
+	fs.createDirectory(componentname);
+	fs.createFile(`${componentname}/${componentname}.component.js`, data.jsFile);
+	fs.createFile(`${componentname}/${componentname}.component.css`, data.exampleCss);
+
+	if(electron) {
+		fs.createFile(`${componentname}/${componentname}.component.html`, data.exampleHtmlElectron);
+	}
+	else {
+		fs.createFile(`${componentname}/${componentname}.component.html`, data.exampleHtml);
+	}
+
+	registerComponent(`${componentname}/${componentname}.component.js`)
 }
 
-function registerComponent() {
-	
+async function registerComponent(classname, filename) {
+	//let mainjs = fs.getProjectRoot() + "/main.js";
+	fs.getProjectRoot().then(s => {
+		console.log(s);
+	});
+	/*console.log(projectroot);
+	let filepath = fs.findFile(`${classname}.component.js`, fs.getProjectRoot());
+
+	console.log("mainjs: " + mainjs);
+	console.log("filepath: " + filepath);*/
+	//fs.appendFile(mainjs, `import ${classname} from "${filepath}";`);
+}
+
+function matchesConstraint(name) {
+	return name.match(/\D*(-\D+)*/).length > 0;
 }
