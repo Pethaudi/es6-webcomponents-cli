@@ -2,4 +2,4 @@
 
 const fs = require("./../services/FileManager.js");
 
-fs.createFile("test", "blabl");
+fs.createDirectory("test1/subtest1");
