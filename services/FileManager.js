@@ -23,17 +23,12 @@ class FileManager {
         return path.dirname(filename).split(path.sep).pop();
     }
 
-    static findFile(filename, counter = 5) {
-
-		console.log("\n");
-        console.log(filename + " " + counter);
+    static findFile(filename, counter = 10) {
         if (counter < 0) {
-            console.log("counter is to low");
             return "";
 		}
 
         if (!fs.existsSync(filename)) {
-            console.log("Result of the boolean: " + fs.existsSync(filename));
             counter--;
             return FileManager.findFile("../" + filename, counter);
         }
@@ -42,29 +37,15 @@ class FileManager {
 		}
 	}
 
-static fromDir(filter, startPath = "./") {
+	static isElectronApp(filename) {
+		if(this.readFile(filename).indexOf("electron") >= 0);
+			return true;
+		return false;
+	}
 
-    //console.log('Starting from dir '+startPath+'/');
-
-    if (!fs.existsSync(startPath)) {
-        console.log("no dir ", startPath);
-        return;
-    }
-
-    var files = fs.readdirSync(startPath);
-    console.log(files);
-    for (var i = 0; i < files.length; i++) {
-        var filename = path.join(startPath, files[i]);
-        console.log(filename);
-        var stat = fs.lstatSync(filename);
-        if (stat.isDirectory()) {
-            FileManager.fromDir(filename, filter); //recurse
-        }
-        else if (filename.indexOf(filter) >= 0) {
-            console.log('-- found: ', filename);
-        };
-    };
-}
+	static readFile(filename) {
+		return fs.readFileSync(filename);
+	}
 }
 
 module.exports = FileManager;

@@ -8,7 +8,11 @@ let projectname = "";
 let [,,...args] = process.argv;
 
 console.log(process.cwd());
-console.log("found the file: " + fs.findFile("index.js"));
-/*function main(args) {
 
-}*/
+isElectronApp();
+
+function isElectronApp() {
+	let package = fs.findFile("package.json");
+	console.log(package);
+	console.log(fs.isElectronApp(package));
+}
