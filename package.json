@@ -18,6 +18,9 @@
   "homepage": "https://github.com/Pethaudi/es6-webcomponents-cli#readme",
   "bin": {
     "test": "./index.js",
-    "es6": "./create-project/CreateProject.js"
+    "es6": "./create-project/CreateProject.js",
+    "es6-project": "./create-project/CreateProject.js",
+    "es6-component": "./create-component/CreateComponent.js",
+    "comp": "./create-component/CreateComponent.js"
   }
 }

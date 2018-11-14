@@ -161,3 +161,5 @@ class Strings {
             "}\n"
     }
 }
+
+module.exports = Strings;
