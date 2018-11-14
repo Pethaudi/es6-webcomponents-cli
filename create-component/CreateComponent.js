@@ -8,6 +8,8 @@ let [,,...args] = process.argv;
 let electron = isElectronApp();
 let onlyJs = false;
 
+main(args);
+
 function main(args) {
 	if(args.length == 0) {
 		console.log("please name the component");
@@ -48,19 +50,16 @@ function createAllFiles() {
 		fs.createFile(`${componentname}/${componentname}.component.html`, data.exampleHtml);
 	}
 
-	registerComponent(`${componentname}/${componentname}.component.js`)
+	//registerComponent(componentname);
 }
 
-async function registerComponent(classname, filename) {
-	//let mainjs = fs.getProjectRoot() + "/main.js";
-	fs.getProjectRoot().then(s => {
-		console.log(s);
-	});
-	/*console.log(projectroot);
-	let filepath = fs.findFile(`${classname}.component.js`, fs.getProjectRoot());
+async function registerComponent(classname) {
+	let mainjs = await fs.getProjectRoot() + "/src/main.js";
+	console.log(mainjs);
+	//let filepath = fs.findFile(`${classname}.component.js`, fs.getProjectRoot());
 
-	console.log("mainjs: " + mainjs);
-	console.log("filepath: " + filepath);*/
+	//console.log("mainjs: " + mainjs);
+	//console.log("filepath: " + filepath);
 	//fs.appendFile(mainjs, `import ${classname} from "${filepath}";`);
 }
 
