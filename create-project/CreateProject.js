@@ -2,4 +2,20 @@
 
 const fs = require("./../services/FileManager.js");
 
-fs.createDirectory("test1/subtest1");
+let homefolder = "./";
+
+createHomefolder("testproject")
+
+function main(args) {
+    
+}
+
+function createHomefolder(name) {
+    homefolder += name + "/";
+    fs.createDirectory(homefolder);
+}
+
+function createDirectories() {
+    fs.createDirectory(homefolder + "src");
+    fs.createDirectory(homefolder + "src/components");
+}
