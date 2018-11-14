@@ -54,4 +54,6 @@ function createFiles(electron) {
     }
 
     fs.createFile(homefolder + "webpack.config.js", data.webpackConf());
+    fs.createFile(homefolder + "src/styles.css");
+    fs.createFile(homefolder + "src/main.js");
 }
