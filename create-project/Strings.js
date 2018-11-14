@@ -110,7 +110,7 @@ class Strings {
             "}"
     }
 
-    static packageJson(homefolder, name) {
+    static packageJson(name) {
         return "{\n" +
             "  \"name\": \"" + name + "\",\n" +
             "  \"version\": \"1.0.0\",\n" +
@@ -130,8 +130,7 @@ class Strings {
             "  },\n" +
             "  \"devDependencies\": {\n" +
             "    \"webpack-cli\": \"^3.1.2\"\n" +
-			"  },\n" +
-			"	\"root\": \"" + homefolder + "\"\n" +
+			"  }\n" +
             "}\n"
     }
 
@@ -159,7 +158,6 @@ class Strings {
             "  \"devDependencies\": {\n" +
             "    \"webpack-cli\": \"^3.1.2\"\n" +
             "  }\n" +
-			"	\"root\": \"" + homefolder + "\"\n" +
             "}\n"
     }
 
