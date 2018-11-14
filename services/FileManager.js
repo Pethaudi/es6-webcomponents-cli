@@ -24,22 +24,23 @@ class FileManager {
     }
 
     static findFile(filename, counter = 5) {
+
+		console.log("\n");
         console.log(filename + " " + counter);
         if (counter < 0) {
             console.log("counter is to low");
             return "";
-        }
+		}
 
-        if (!fs.exists("./" + filename)) {
-            console.log(!fs.exists("./" + filename));
-            console.log("file does not exist");
+        if (!fs.existsSync(filename)) {
+            console.log("Result of the boolean: " + fs.existsSync(filename));
             counter--;
             return FileManager.findFile("../" + filename, counter);
         }
         else {
             return filename;
-        }
-    }
+		}
+	}
 
 static fromDir(filter, startPath = "./") {
 
