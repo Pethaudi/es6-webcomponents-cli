@@ -159,6 +159,7 @@ class Strings {
             "  \"devDependencies\": {\n" +
             "    \"webpack-cli\": \"^3.1.2\"\n" +
             "  }\n" +
+			"	\"root\": \"" + homefolder + "\"\n" +
             "}\n"
     }
 
