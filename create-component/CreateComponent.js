@@ -32,6 +32,7 @@ function main(args) {
 	}
 
 	createAllFiles();
+	registerComponent();
 }
 
 async function isElectronApp() {
@@ -43,6 +44,7 @@ function getProjectRoot() {
 }
 
 async function createAllFiles() {
+    console.log("creating files: ");
 	let componentfolder = await projectroot + "/src/components/" + componentname;
 	fs.createDirectory(componentfolder);
 	fs.createFile(`${componentfolder}/${componentname}.component.js`, data.jsFile);
@@ -56,14 +58,11 @@ async function createAllFiles() {
 	}
 }
 
-async function registerComponent(classname) {
+async function registerComponent() {
+    console.log("registering component: " + componentname);
 	let mainjs = await fs.getProjectRoot() + "/src/main.js";
-	console.log(mainjs);
-	//let filepath = fs.findFile(`${classname}.component.js`, fs.getProjectRoot());
-
-	//console.log("mainjs: " + mainjs);
-	//console.log("filepath: " + filepath);
-	//fs.appendFile(mainjs, `import ${classname} from "${filepath}";`);
+	let filepath = `./components/${componentname}/${componentname}.component.js`;
+	await fs.appendFile(await mainjs, `import ${componentname} from "${filepath}";`);
 }
 
 function matchesConstraint(name) {
