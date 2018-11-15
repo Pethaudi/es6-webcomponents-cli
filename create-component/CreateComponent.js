@@ -5,6 +5,7 @@ const data = require("./Strings.js");
 
 let componentname = "";
 let [,,...args] = process.argv;
+let projectroot = getProjectRoot();
 let electron = isElectronApp();
 let onlyJs = false;
 
@@ -34,23 +35,25 @@ function main(args) {
 }
 
 async function isElectronApp() {
-	let package = await fs.getProjectRoot();
-	return fs.isElectronApp(package + "/package.json");
+	return fs.isElectronApp(await projectroot + "/package.json");
 }
 
-function createAllFiles() {
-	fs.createDirectory(componentname);
-	fs.createFile(`${componentname}/${componentname}.component.js`, data.jsFile);
-	fs.createFile(`${componentname}/${componentname}.component.css`, data.exampleCss);
+function getProjectRoot() {
+	return fs.getProjectRoot();
+}
+
+async function createAllFiles() {
+	let componentfolder = await projectroot + "/src/components/" + componentname;
+	fs.createDirectory(componentfolder);
+	fs.createFile(`${componentfolder}/${componentname}.component.js`, data.jsFile);
+	fs.createFile(`${componentfolder}/${componentname}.component.css`, data.exampleCss);
 
 	if(electron) {
-		fs.createFile(`${componentname}/${componentname}.component.html`, data.exampleHtmlElectron);
+		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtmlElectron);
 	}
 	else {
-		fs.createFile(`${componentname}/${componentname}.component.html`, data.exampleHtml);
+		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtml);
 	}
-
-	//registerComponent(componentname);
 }
 
 async function registerComponent(classname) {

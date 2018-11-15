@@ -72,7 +72,7 @@ class FileManager {
 	}
 
 	static async getProjectRoot() {
-		return await pkg(__dirname);
+		return await pkg(process.cwd());
 	}
 }
 
