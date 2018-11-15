@@ -22,7 +22,11 @@ class FileManager {
 	}
 	
 	static appendFile(file, text) {
-		fs.appendFile(file, text);
+		return fs.appendFile(file, text, function(err) {
+		    if(err)
+		        throw err;
+		    console.log("appended to file");
+        });
 	}
 
     static getParentFolderName(currentfolder) {
