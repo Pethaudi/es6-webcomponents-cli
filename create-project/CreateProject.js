@@ -21,18 +21,25 @@ function main(args) {
         }
     }
 
-    createHomefolder(homefolder);
-    createDirectories();
+	console.log("creating homefolder");
+	
+	createHomefolder(homefolder);
+	console.log("creating directories")
+	createDirectories();
+	console.log("creating files");
     createFiles(electron);
 }
 
 function createHomefolder(name) {
+
+	console.log(process.cwd());
+
     if(name === "") {
-        projectname = fs.getParentFolderName();
+		projectname = fs.getParentFolderName(name);
         return;
     }
 
-    homefolder += name + "/";
+    homefolder += process.cwd() + "/" + name + "/";
     projectname = name;
     fs.createDirectory(homefolder);
 }
@@ -43,15 +50,20 @@ function createDirectories() {
 }
 
 function createFiles(electron) {
+
+	console.log("homefolder: " + homefolder);
+
     if(electron) {
         fs.createFile(homefolder + "src/index.html", data.indexHtmlElectron(projectname));
-        fs.createFile(homefolder + "package.json", data.packageJsonElectron(projectname));
+        fs.createFile(homefolder + "package.json", data.packageJsonElectron(homefolder, projectname));
         fs.createFile(homefolder + "index.js", data.indexJs());
     }
     else {
         fs.createFile(homefolder + "src/index.html", data.indexHtml(projectname));
-        fs.createFile(homefolder + "package.json", data.packageJson(projectname));
+        fs.createFile(homefolder + "package.json", data.packageJson(homefolder, projectname));
     }
 
     fs.createFile(homefolder + "webpack.config.js", data.webpackConf());
+    fs.createFile(homefolder + "src/styles.css");
+    fs.createFile(homefolder + "src/main.js");
 }

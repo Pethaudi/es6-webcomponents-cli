@@ -130,7 +130,7 @@ class Strings {
             "  },\n" +
             "  \"devDependencies\": {\n" +
             "    \"webpack-cli\": \"^3.1.2\"\n" +
-            "  }\n" +
+			"  }\n" +
             "}\n"
     }
 
