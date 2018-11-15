@@ -47,14 +47,14 @@ async function createAllFiles() {
     console.log("creating files: ");
 	let componentfolder = await projectroot + "/src/components/" + componentname;
 	fs.createDirectory(componentfolder);
-	fs.createFile(`${componentfolder}/${componentname}.component.js`, data.jsFile);
-	fs.createFile(`${componentfolder}/${componentname}.component.css`, data.exampleCss);
+	fs.createFile(`${componentfolder}/${componentname}.component.js`, data.jsFile(componentname));
+	fs.createFile(`${componentfolder}/${componentname}.component.css`, data.exampleCss());
 
 	if(electron) {
-		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtmlElectron);
+		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtmlElectron(componentname));
 	}
 	else {
-		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtml);
+		fs.createFile(`${componentfolder}/${componentname}.component.html`, data.exampleHtml(componentname));
 	}
 }
 
