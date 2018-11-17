@@ -5,11 +5,18 @@ const data = require("./Strings.js");
 
 let componentname = "";
 let [,,...args] = process.argv;
-let projectroot = getProjectRoot();
-let electron = isElectronApp();
+let electron = "";
 let onlyJs = false;
+let projectroot = "";
 
-main(args);
+
+getProjectRoot().then(proroot => {
+	projectroot = proroot;
+    isElectronApp().then(iselec => {
+    	electron = iselec;
+    	main(args);
+	})
+});
 
 function main(args) {
 	if(args.length == 0) {
@@ -26,6 +33,8 @@ function main(args) {
 		}
 	}
 
+	console.log("is electron: ", electron);
+
 	if(componentname === ""){
 		console.log("please enter a valid name for the component");
 		return;
@@ -36,16 +45,16 @@ function main(args) {
 }
 
 async function isElectronApp() {
-	return fs.isElectronApp(await projectroot + "/package.json");
+	return await fs.isElectronApp(projectroot + "/package.json");
 }
 
-function getProjectRoot() {
-	return fs.getProjectRoot();
+async function getProjectRoot() {
+	return await fs.getProjectRoot();
 }
 
 async function createAllFiles() {
     console.log("creating files: ");
-	let componentfolder = await projectroot + "/src/components/" + componentname;
+	let componentfolder = projectroot + "/src/components/" + componentname;
 	fs.createDirectory(componentfolder);
 	fs.createFile(`${componentfolder}/${componentname}.component.js`, data.jsFile(componentname));
 	fs.createFile(`${componentfolder}/${componentname}.component.css`, data.exampleCss());
@@ -60,9 +69,9 @@ async function createAllFiles() {
 
 async function registerComponent() {
     console.log("registering component: " + componentname);
-	let mainjs = await fs.getProjectRoot() + "/src/main.js";
+	let mainjs = fs.getProjectRoot() + "/src/main.js";
 	let filepath = `./components/${componentname}/${componentname}.component.js`;
-	await fs.appendFile(await mainjs, `import ${componentname} from "${filepath}";`);
+	await fs.appendFile(mainjs, `import ${componentname} from "${filepath}";`);
 }
 
 function matchesConstraint(name) {
